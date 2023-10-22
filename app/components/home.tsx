@@ -29,6 +29,10 @@ import { AuthPage } from "./auth";
 import { getClientConfig } from "../config/client";
 import { api } from "../client/api";
 import { useAccessStore } from "../store";
+import { LoginPage } from "./login";
+import { SessionProvider, getSession, useSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { AppProps } from "next/app";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -127,9 +131,10 @@ function Screen() {
   const location = useLocation();
   const isHome = location.pathname === Path.Home;
   const isAuth = location.pathname === Path.Auth;
+  const isLogin = false;
   const isMobileScreen = useMobileScreen();
-  const shouldTightBorder = getClientConfig()?.isApp || (config.tightBorder && !isMobileScreen);
-
+  const shouldTightBorder =
+    getClientConfig()?.isApp || (config.tightBorder && !isMobileScreen);
   useEffect(() => {
     loadAsyncGoogleFont();
   }, []);
@@ -143,9 +148,9 @@ function Screen() {
         }`
       }
     >
-      {isAuth ? (
+      {isLogin ? (
         <>
-          <AuthPage />
+          <LoginPage />
         </>
       ) : (
         <>
@@ -158,6 +163,7 @@ function Screen() {
               <Route path={Path.Masks} element={<MaskPage />} />
               <Route path={Path.Chat} element={<Chat />} />
               <Route path={Path.Settings} element={<Settings />} />
+              <Route path={Path.Login} element={<LoginPage />} />
             </Routes>
           </div>
         </>

@@ -1,3 +1,4 @@
+import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
 
 async function handle(
@@ -7,7 +8,18 @@ async function handle(
   if (req.method === "OPTIONS") {
     return NextResponse.json({ body: "OK" }, { status: 200 });
   }
-
+  const userInfo = await getServerSession();
+  if (!userInfo?.user?.name) {
+    return NextResponse.json(
+      {
+        error: true,
+        msg: "please login.",
+      },
+      {
+        status: 401,
+      },
+    );
+  }
   const [protocol, ...subpath] = params.path;
   const targetUrl = `${protocol}://${subpath.join("/")}`;
 

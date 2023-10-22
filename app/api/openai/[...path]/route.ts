@@ -5,6 +5,8 @@ import { prettyObject } from "@/app/utils/format";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "../../auth";
 import { requestOpenai } from "../../common";
+import { getServerSession } from "next-auth/next";
+import { handler as authOptions } from "../../auth/[...nextauth]/route";
 
 const ALLOWD_PATH = new Set(Object.values(OpenaiPath));
 
@@ -30,6 +32,19 @@ async function handle(
     return NextResponse.json({ body: "OK" }, { status: 200 });
   }
 
+  const userInfo = await getServerSession();
+  if (!userInfo?.user?.name) {
+    return NextResponse.json(
+      {
+        error: true,
+        msg: "please login.",
+      },
+      {
+        status: 401,
+      },
+    );
+  }
+
   const subpath = params.path.join("/");
 
   if (!ALLOWD_PATH.has(subpath)) {
@@ -45,12 +60,12 @@ async function handle(
     );
   }
 
-  const authResult = auth(req);
-  if (authResult.error) {
-    return NextResponse.json(authResult, {
-      status: 401,
-    });
-  }
+  // const authResult = auth(req);
+  // if (authResult.error) {
+  //   return NextResponse.json(authResult, {
+  //     status: 401,
+  //   });
+  // }
 
   try {
     const response = await requestOpenai(req);
@@ -74,4 +89,4 @@ async function handle(
 export const GET = handle;
 export const POST = handle;
 
-export const runtime = "edge";
+export const runtime = "nodejs";

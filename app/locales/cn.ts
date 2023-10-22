@@ -18,6 +18,16 @@ const cn = {
     Confirm: "确认",
     Later: "稍后再说",
   },
+  Login: {
+    Title: "登录",
+    Tips: "请输入账户和密码",
+    SubTips: "可选。输入后将使用您自己的OpenAI API Key",
+    InputAccount: "账户",
+    InputPassword: "密码",
+    Confirm: "登录",
+    Later: "稍后再说",
+    Logout: "退出",
+  },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} 条对话`,
   },

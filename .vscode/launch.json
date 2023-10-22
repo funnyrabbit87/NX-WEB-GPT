@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Entire App",
+            "program": "${workspaceFolder}\\.next\\server\\app\\page.js",  // 选择 HTML 文件中引用的 JavaScript 文件
+            //"outFiles": ["d:\\code\\excalidraw\\src\\packages\\excalidraw\\example\\public\\bundle.js"],
+            "sourceMaps": true,
+        
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Next.js",
+      "program": "${workspaceFolder}/node_modules/next/dist/bin/next",
+      "args": ["dev"],
+      "runtimeArgs": ["--inspect"],
+      "sourceMaps": true,
+      "skipFiles": ["<node_internals>/**"]
+    }
+    ]
+}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 
 import styles from "./home.module.scss";
 
@@ -29,6 +29,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMobileScreen } from "../utils";
 import dynamic from "next/dynamic";
 import { showConfirm, showToast } from "./ui-lib";
+import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import LogoutPage from "./logout";
 
 const ChatList = dynamic(async () => (await import("./chat-list")).ChatList, {
   loading: () => null,
@@ -127,6 +130,21 @@ function useDragSideBar() {
   };
 }
 
+// function checkLoggedIn() {
+
+//   useEffect(() => {
+//     async function checkSession() {
+//       const hasSession = await getSession();
+//       console.log("3eeee");
+//       console.log(hasSession);
+//       if (hasSession?.user?.email) {
+//         //setHasLoggedin("<LogoutPage/>");
+//       }
+//     }
+
+//     checkSession();
+//   }, [])
+// }
 export function SideBar(props: { className?: string }) {
   const chatStore = useChatStore();
 
@@ -134,7 +152,7 @@ export function SideBar(props: { className?: string }) {
   const { onDragStart, shouldNarrow } = useDragSideBar();
   const navigate = useNavigate();
   const config = useAppConfig();
-
+  //checkLoggedIn();
   useHotKey();
 
   return (

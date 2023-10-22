@@ -20,6 +20,16 @@ const en: LocaleType = {
     Confirm: "Confirm",
     Later: "Later",
   },
+  Login: {
+    Title: "Login",
+    Tips: "Input your account&password",
+    SubTips: "OpenAI API Key is optional",
+    InputAccount: "Your Account",
+    InputPassword: "Your Password",
+    Confirm: "Login",
+    Later: "Later",
+    Logout: "Logout",
+  },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,
   },

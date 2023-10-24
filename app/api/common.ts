@@ -6,9 +6,9 @@ const PROTOCOL = process.env.PROTOCOL || DEFAULT_PROTOCOL;
 const BASE_URL = process.env.BASE_URL || OPENAI_URL;
 const DISABLE_GPT4 = !!process.env.DISABLE_GPT4;
 
-export async function requestOpenai(req: NextRequest, apikey?: string) {
+export async function requestOpenai(req: NextRequest, userApiKey?: string) {
   const controller = new AbortController();
-  const authValue = req.headers.get("Authorization") ?? "";
+  const authValue = userApiKey??process.env.OPENAI_API_KEY;
   const openaiPath = `${req.nextUrl.pathname}${req.nextUrl.search}`.replaceAll(
     "/api/openai/",
     "",

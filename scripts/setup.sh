@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bashPORT
 
 # Check if running on a supported system
 case "$(uname -s)" in
@@ -54,15 +54,17 @@ if ! command -v node >/dev/null || ! command -v git >/dev/null || ! command -v y
 fi
 
 # Clone the repository and install dependencies
-git clone https://github.com/Yidadaa/ChatGPT-Next-Web
-cd ChatGPT-Next-Web
+git clone https://github.com/funnyrabbit87/NX-WEB-GPT
+cd NX-WEB-GPT
 yarn install
 
 # Prompt user for environment variables
 read -p "Enter OPENAI_API_KEY: " OPENAI_API_KEY
 read -p "Enter CODE: " CODE
 read -p "Enter PORT: " PORT
+read -p "Enter USERS: " USERS
+read -p "Enter AUTHADD: " AUTHADD
 
 # Build and run the project using the environment variables
-OPENAI_API_KEY=$OPENAI_API_KEY CODE=$CODE PORT=$PORT yarn build
-OPENAI_API_KEY=$OPENAI_API_KEY CODE=$CODE PORT=$PORT yarn start
+OPENAI_API_KEY=$OPENAI_API_KEY CODE=$CODE PORT=$PORT USERS=$USERS NEXTAUTH_URL=http://$AUTHADD:$PORT NEXTAUTH_SECRET=mpuNGfAT8AM5E/0YJvP5ikB3Z9gQ42vzZY49ctPGBRs= yarn build
+OPENAI_API_KEY=$OPENAI_API_KEY CODE=$CODE PORT=$PORT USERS=$USERS NEXTAUTH_URL=http://$AUTHADD:$PORT NEXTAUTH_SECRET=mpuNGfAT8AM5E/0YJvP5ikB3Z9gQ42vzZY49ctPGBRs= yarn start

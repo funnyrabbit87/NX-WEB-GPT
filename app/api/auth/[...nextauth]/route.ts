@@ -1,14 +1,11 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getServerSideConfig } from "../../../config/server";
-export const handler = NextAuth({
+const handler = NextAuth({
   pages: {
     signIn: "/login",
   },
   callbacks: {
-    async session({ session, token, user }) {
-      return session;
-    },
     async jwt({ token, user, account, profile, session }) {
       return { ...token, ...user };
     },
@@ -46,7 +43,7 @@ export const handler = NextAuth({
           name: credentials?.username.split("@")[0],
           id: credentials?.username,
           email: credentials?.username,
-          api: credentials?.apikey,
+          yourKey: credentials?.apikey,
         };
 
         // If no error and we have user data, return it

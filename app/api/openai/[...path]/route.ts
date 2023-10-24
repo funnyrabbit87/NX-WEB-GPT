@@ -3,10 +3,8 @@ import { getServerSideConfig } from "@/app/config/server";
 import { OpenaiPath } from "@/app/constant";
 import { prettyObject } from "@/app/utils/format";
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "../../auth";
 import { requestOpenai } from "../../common";
-import { getServerSession } from "next-auth/next";
-import { handler as authOptions } from "../../auth/[...nextauth]/route";
+import { getToken } from "next-auth/jwt";
 
 const ALLOWD_PATH = new Set(Object.values(OpenaiPath));
 
@@ -32,8 +30,9 @@ async function handle(
     return NextResponse.json({ body: "OK" }, { status: 200 });
   }
 
-  const userInfo = await getServerSession();
-  if (!userInfo?.user?.name) {
+  const pa={req:req};
+  const tokenInfo = await getToken(pa) as any;
+  if (!tokenInfo?.email) {
     return NextResponse.json(
       {
         error: true,
@@ -66,9 +65,8 @@ async function handle(
   //     status: 401,
   //   });
   // }
-
   try {
-    const response = await requestOpenai(req);
+    const response = await requestOpenai(req,tokenInfo.yourKey);
 
     // list models
     if (subpath === OpenaiPath.ListModelPath && response.status === 200) {
@@ -90,3 +88,4 @@ export const GET = handle;
 export const POST = handle;
 
 export const runtime = "nodejs";
+
